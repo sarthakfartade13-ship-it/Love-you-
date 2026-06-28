@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix Love</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    background:#000;
+    font-family:Arial,sans-serif;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    text-align:center;
+}
+
+.center h1{
+    color:#ff4fa3;
+    font-size:70px;
+    text-shadow:
+    0 0 10px #ff4fa3,
+    0 0 20px #ff4fa3,
+    0 0 40px #ff1493,
+    0 0 80px #ff1493;
+    animation:pulse 2s infinite;
+    letter-spacing:5px;
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.08);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="center">
+<h1>I LOVE YOU KRITIKA ❤️</h1>
+</div>
+
+<script>
+
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
+const fontSize=18;
+const columns=Math.floor(canvas.width/fontSize);
+
+const drops=[];
+
+for(let i=0;i<columns;i++){
+    drops[i]=Math.random()*canvas.height/fontSize;
+}
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#ff4fa3";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=chars[Math.floor(Math.random()*chars.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,35);
+
+window.onresize=function(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+};
+
+</script>
+
+</body>
+</html>
